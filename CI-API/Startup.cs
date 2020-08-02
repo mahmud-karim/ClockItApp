@@ -40,6 +40,12 @@ namespace CI_API
             {
                 app.UseDeveloperExceptionPage();
             }
+            app.UseCors(builder =>
+            {
+                builder.WithOrigins("http://localhost:4200");
+                builder.AllowAnyMethod();
+                builder.AllowAnyHeader();
+            });
 
             app.UseHttpsRedirection();
 
