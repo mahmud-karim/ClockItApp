@@ -35,7 +35,7 @@ namespace CI.API.Controllers
             };
             var result = await _userManager.CreateAsync(employer, model.Password);
 
-            if(!result.Succeeded)
+            if (!result.Succeeded)
             {
                 return BadRequest(result);
             }

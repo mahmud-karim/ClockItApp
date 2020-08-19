@@ -29,7 +29,8 @@ namespace CI.API
         // This method gets called by the runtime. Use this method to add services to the container.
         public void ConfigureServices(IServiceCollection services)
         {
-            IdentityBuilder builder = services.AddIdentityCore<User>(opt => {
+            IdentityBuilder builder = services.AddIdentityCore<User>(opt =>
+            {
                 opt.Password.RequireDigit = false;
                 opt.Password.RequireLowercase = false;
                 opt.Password.RequireNonAlphanumeric = false;
@@ -38,7 +39,8 @@ namespace CI.API
             });
 
             builder.AddEntityFrameworkStores<ApplicationDbContext>();
-            
+            builder.AddSignInManager<SignInManager<User>>();
+
 
             services.AddDbContext<ApplicationDbContext>(options =>
                 options.UseSqlite(Configuration.GetConnectionString("Default")));
