@@ -45,6 +45,10 @@ namespace CI.API
             builder.AddSignInManager<SignInManager<User>>();
             builder.AddRoleManager<RoleManager<IdentityRole>>();
 
+            services.AddAuthorization(options =>
+                options.AddPolicy("EmployerPolicy",
+                policy => policy.RequireRole("Employer")));
+
             services.AddAuthentication(JwtBearerDefaults.AuthenticationScheme)
                 .AddJwtBearer(options =>
                 {
