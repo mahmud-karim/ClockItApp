@@ -20,7 +20,6 @@ namespace CI.API.Controllers
     [ApiController]
     public class AuthController : ControllerBase
     {
-
         private readonly UserManager<User> _userManager;
         private readonly SignInManager<User> _signInManager;
         private readonly IConfiguration _config;
@@ -53,6 +52,21 @@ namespace CI.API.Controllers
                 result = result,
                 token = JwtTokenGeneratorMachine(user)
             });
+        }
+
+        // Post api/auth/confirmemail
+        [HttpPost("confirmemail")]
+        public async Task<IActionResult> ConfirmEmail(ConfirmEmailViewModel model)
+        {
+            var employer = await _userManager.FindByIdAsync(model.UserId);
+            var confirm = await _userManager.ConfirmEmailAsync(employer, Uri.UnescapeDataString(model.Token));
+
+            if (confirm.Succeeded)
+            {
+                return Ok();
+            }
+
+            return Unauthorized();
         }
 
         private async Task<string> JwtTokenGeneratorMachine(User userInfo)
